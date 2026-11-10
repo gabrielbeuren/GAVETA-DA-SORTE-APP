@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 import { useState } from 'react';
 import {
@@ -12,6 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [carregando, setCarregando] = useState(false);
@@ -50,11 +52,9 @@ export default function HomeScreen() {
       }
 
       await SecureStore.setItemAsync('token', dados.token);
+      router.replace('/home');
 
-      Alert.alert(
-        'Sucesso',
-        `Bem-vindo, ${dados.usuario.nome}!`
-      );
+    
 
     } catch (erro) {
       Alert.alert(
